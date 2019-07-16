@@ -43,7 +43,6 @@ func_start()
 	aria_rport=`nvram get aria_rport`
 	aria_user=`nvram get http_username`
 	aria_pass=`nvram get http_passwd`
-	lan_ipaddr=`nvram get lan_ipaddr_t`
 
 	[ -z "$aria_rport" ] && aria_rport="6800"
 	[ -z "$aria_pport" ] && aria_pport="16888"
@@ -113,7 +112,7 @@ angular
 .constant('\$titlePattern', 'DL: {download_speed} - UL: {upload_speed}')
 .constant('\$pageSize', 11)
 .constant('\$authconf', {
-  host: '$lan_ipaddr',
+  host: window.location.hostname,
   path: '/jsonrpc',
   port: '$aria_rport',
   encrypt: false,
@@ -147,7 +146,7 @@ EOF
 	else
 		old_host=`grep 'host:' $FILE_WEB_CONF | awk -F \' '{print $2}'`
 		old_port=`grep 'port:' $FILE_WEB_CONF | awk -F \' '{print $2}'`
-		[ "$old_host" != "$lan_ipaddr" ] && sed -i "s/\(host:\).*/\1\ \'$lan_ipaddr\'\,/" $FILE_WEB_CONF
+		[ "$old_host" != "$aria_rhost" ] && sed -i "s/\(host:\).*/\1\ \'$aria_rhost\'\,/" $FILE_WEB_CONF
 		[ "$old_port" != "$aria_rport" ] && sed -i "s/\(port:\).*/\1\ \'$aria_rport\'\,/" $FILE_WEB_CONF
 	fi
 
