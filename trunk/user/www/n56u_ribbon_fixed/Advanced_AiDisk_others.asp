@@ -126,22 +126,13 @@ var window_aria;
 var window_params="toolbar=yes,location=yes,directories=no,status=yes,menubar=yes,scrollbars=yes,resizable=yes,copyhistory=no,width=800,height=600";
 
 function on_aria_link(){
-	var aria_url="http";
-	var http_url=lan_ipaddr;
-	if (http_proto=='1'){
-		aria_url+="s";
-		if (https_port!='443')
-			http_url+=":"+https_port;
-	}else if (http_port!='80'){
-		http_url+=":"+http_port;
-	}
-	aria_url+="://"+http_url+"/ariaweb/index.html";
+	var aria_url = "/ariaweb/index.html";
 	window_aria = window.open(aria_url, "Aria2", window_params);
 	window_aria.focus();
 }
 
 function on_rpc_link(){
-	var rpc_url="http://" + lan_ipaddr + ":" + document.form.trmd_rport.value;
+	var rpc_url = window.location.protocol + "//" + window.location.hostname + ":" + document.form.trmd_rport.value;
 	window_rpc = window.open(rpc_url, "Transmission", window_params);
 	window_rpc.focus();
 }
